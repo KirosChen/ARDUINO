@@ -15,7 +15,7 @@ void setup(){
    pinMode(Button1,INPUT_PULLUP);
    pinMode(Button2,INPUT_PULLUP);
    pinMode(Button3,INPUT_PULLUP);
-   inMode(Buz, OUTPUT);
+   PinMode(Buz, OUTPUT);
 }
 
 void BLinky(){
