@@ -1,35 +1,44 @@
-#include <Servo.h>
-Servo servo
-#define trigPin 13;
-#define echoPin 12;
+/* this code for the project for Halloween made by Mingyuan Chen,Derek Jon Ebio,Danvide Ambayec, Seungwon Park.
+ *  
+ * setup for the project.this project include Servo and Senser. 
+ *  trigPin = 13 
+ *  echoPin = 12 
+ *  servo attach = 9 
+ *  buz = 
+ */
 
+
+#include <Servo.h>
+ Servo myservo ;
+ #define trigPin  13 ;
+ #define echoPin  12 ;
+ int buz = A1;
+ int deg_for_servo = 500; 
+ int setup_distance= 2 ; 
 
 void setup() {
   Serial.begin (9600);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
-  servo.attach(9);
-
-}
-void Move(){
-  myservo.write(180) ;
- delay (300);
- myservo. write(0);
- delay (300);
-}
-
+  myservo.attach(9);
+ }
+/* Code from http://www.instructables.com/id/Simple-Arduino-and-HC-SR04-Example/ 
+ *  Moidify by Danvid ,Mingyuan 
+ *  
+  */
 void loop() {
-  long duration, distance;
-  digitalWrite(trigPin, LOW);  // Added this line
-  delayMicroseconds(2); // Added this line
-  digitalWrite(trigPin, HIGH);
-
-  delayMicroseconds(10); // Added this line
-  digitalWrite(trigPin, LOW);
-  duration = pulseIn(echoPin, HIGH);
-  distance = (duration/2) / 29.1;
-  if(distance <=2 ){
-    
-  }
+ long duration, distance;
+ digitalWrite(trigPin, LOW);  
+ delayMicroseconds(2); 
+ digitalWrite(trigPin, HIGH);
+ delayMicroseconds(10); 
+ digitalWrite(trigPin, LOW);
+ duration = pulseIn(echoPin, HIGH);
+ distance = (duration/2) / 29.1;
+if(distance <=setup_distance){
+  myservo.write(deg_for_servo);
+  delay (300);
+  myservo. write(0);
+  delay (300);
+ }
 }
- 
