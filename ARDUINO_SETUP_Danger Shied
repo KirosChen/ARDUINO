@@ -6,6 +6,10 @@ int Button1=10;
 int Button2=11;
 int Button3=12;
 int Buz   = 3;
+int Slider1 = A2;
+int Slider2 = A1;
+int Slider3 = A0;
+
 
 void setup(){
    pinMode(LED_1, OUTPUT);
