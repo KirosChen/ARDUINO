@@ -4,7 +4,7 @@
  *  trigPin = 13 
  *  echoPin = 12 
  *  servo attach = 9 
- *  buz = 
+ *  buz = A1
  */
 
 
@@ -13,13 +13,14 @@
  #define trigPin  13 
  #define echoPin  12 
  int buz = A1;
- int deg_for_servo = 8; 
- int setup_distance= 30; 
-
+ int deg_for_servo = 160; 
+ int setup_dif= 5; 
+ int  dif ; 
 void setup() {
   Serial.begin (9600);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
+  pinMode(buz, OUTPUT);
   myservo.attach(9);
  }
 /* Code from http://www.instructables.com/id/Simple-Arduino-and-HC-SR04-Example/ 
@@ -27,24 +28,34 @@ void setup() {
  *  
   */
 void loop() {
- long duration, distance;
+ myservo. write(0);
+long  duration1, distance1,duration2,distance2;
  digitalWrite(trigPin, LOW);  
  delayMicroseconds(2); 
  digitalWrite(trigPin, HIGH);
  delayMicroseconds(10); 
  digitalWrite(trigPin, LOW);
- duration = pulseIn(echoPin, HIGH);
- distance = (duration/2) / 29.1;
-if(distance <=60){
+ duration1 = pulseIn(echoPin, HIGH);
+ distance1 = (duration1/2) / 29.1;
+ delay (900);
+ digitalWrite(trigPin, LOW);  
+ delayMicroseconds(2); 
+ digitalWrite(trigPin, HIGH);
+ delayMicroseconds(10); 
+ digitalWrite(trigPin, LOW);
+ duration2 = pulseIn(echoPin, HIGH);
+ distance2 = (duration2/2) / 29.1;
+ dif = abs (distance1 - distance2) ; 
+ Serial.print(duration1);
+
+if(dif >= setup_dif){
+  delay (200);
   myservo.write(deg_for_servo);
-  delay (300);
-  myservo. write(45);
-  delay (300);
+  delay (200);
+  myservo. write(0);
+  delay (200);
  }
- if (distance >= 200 || distance <= 0){
-    Serial.println("Out of range");
-  }
-  else {
-    Serial.print(distance);
-    Serial.println(" cm");}
+
+ 
+ 
 }
