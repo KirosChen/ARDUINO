@@ -49,11 +49,10 @@ long  duration1, distance1,duration2,distance2;
  Serial.print(duration1);
 
 if(dif >= setup_dif){
-  delay (200);
   myservo.write(deg_for_servo);
-  delay (200);
+  delay (400);
   myservo. write(0);
-  delay (200);
+  delay (400);
  }
 
  
