@@ -19,7 +19,7 @@ void setup(){
    pinMode(Button1,INPUT_PULLUP);
    pinMode(Button2,INPUT_PULLUP);
    pinMode(Button3,INPUT_PULLUP);
-   PinMode(Buz, OUTPUT);
+   pinMode(Buz, OUTPUT);
 }
 
 void BLinky(){
