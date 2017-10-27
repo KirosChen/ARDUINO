@@ -1,10 +1,12 @@
 
-#define trigPin 
-#define 
+#define trigPin //define the trigpin
+#define echoPin //define the echopin 
+
+ void distance (int distance) 
  digitalWrite(trigPin, LOW);  
  delayMicroseconds(2); 
  digitalWrite(trigPin, HIGH);
  delayMicroseconds(10); 
  digitalWrite(trigPin, LOW);
- duration1 = pulseIn(echoPin, HIGH);
- distance1 = (duration1/2) / 29.1;
+ duration = pulseIn(echoPin, HIGH);
+ distance = (duration/2) / 29.1;
