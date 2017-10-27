@@ -1,0 +1,10 @@
+
+#define trigPin 
+#define 
+ digitalWrite(trigPin, LOW);  
+ delayMicroseconds(2); 
+ digitalWrite(trigPin, HIGH);
+ delayMicroseconds(10); 
+ digitalWrite(trigPin, LOW);
+ duration1 = pulseIn(echoPin, HIGH);
+ distance1 = (duration1/2) / 29.1;
