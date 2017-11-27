@@ -54,13 +54,14 @@ void setup() {
 void loop() {
    X_Value = analogRead(PIN_ANALOG_X);
    Y_Value = analogRead(PIN_ANALOG_Y);
+   A = digitalRead(PIN_BTN_RIGHT);
+   B = digitalRead(PIN_BTN_LEFT);
+   C = digitalRead(PIN_BTN_UP);
+   D = digitalRead(PIN_BTN_DOWN);
    
-   sprintf(Output,"%04d%04d%01%01%01%01",X_Value,Y_Value);
+   sprintf(Output,"%04d%04d%d%d%d%d",X_Value,Y_Value,A,B,C,D);
    Serial.print(Output);
-   Serial.print(digitalRead(PIN_BTN_UP));
-   Serial.print(digitalRead(PIN_BTN_DOWN));
-   Serial.print(digitalRead(PIN_BTN_LEFT));
-   Serial.print(digitalRead(PIN_BTN_RIGHT));
+
    Serial.print("\n");
    Sender.write(Output);
    Sender.write ("\n");
