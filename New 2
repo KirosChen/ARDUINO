@@ -1,0 +1,75 @@
+/*This is code for the project making a joystick with Arduino .
+ * Made by Mingyuan Chen  
+ * This code is for Input the data to another Arduino .
+ * Red is for Vcc 
+ * black for the ground 
+ * white fot Txd
+ * green for Rxd
+ */
+// Set up for all the pin.
+#include <SoftwareSerial.h>
+#include <stdio.h>;
+short int PIN_BTN_SELECT = 6;  //  SELECT pin=6 
+short int PIN_BTN_START = 7;  //  START  pin=7
+short int PIN_BTN_RIGHT = 3;  //  RIGHT  pin=3
+short int PIN_BTN_UP = 2;     //  UP     pin=2
+short int PIN_BTN_DOWN = 4;   //  DOWN   pin=4
+short int PIN_BTN_LEFT = 5;   //  LEFT   pin=5
+short int PIN_BTN_JOYSEL = 8; //  JOYSEL pin=8
+
+short int PIN_ANALOG_X = 0;   //Analog X
+short int PIN_ANALOG_Y = 1;   //Analog Y 
+
+short int PIN_SETTING  = 11;  //Setting pin for HC12 
+short int PIN_Rxd = 13;       //Rx 
+short int PIN_Txd = 12;       //Tx 
+int X_Value;
+int Y_Value; 
+char Output[16];
+int A,B,C,D; 
+String N;
+
+
+SoftwareSerial Sender(PIN_Txd,PIN_Rxd);
+
+void setup() {
+  //Setting up for all the PinMode 
+  Serial.begin (9600);
+  Sender.begin(9600); 
+  pinMode(PIN_SETTING,OUTPUT);
+  digitalWrite(PIN_SETTING,HIGH);
+  pinMode(PIN_BTN_RIGHT,  INPUT_PULLUP);  
+  pinMode(PIN_BTN_LEFT,   INPUT_PULLUP);  
+  pinMode(PIN_BTN_UP,     INPUT_PULLUP);  
+  pinMode(PIN_BTN_DOWN,   INPUT_PULLUP);  
+  pinMode(PIN_BTN_SELECT, INPUT_PULLUP);  
+  pinMode(PIN_BTN_START,  INPUT_PULLUP);  
+  pinMode(PIN_BTN_JOYSEL, INPUT_PULLUP);  
+  
+
+
+
+}
+
+
+void loop() {
+   X_Value = analogRead(PIN_ANALOG_X);
+   Y_Value = analogRead(PIN_ANALOG_Y);
+   A = digitalRead(PIN_BTN_RIGHT);
+   B = digitalRead(PIN_BTN_LEFT);
+   C = digitalRead(PIN_BTN_UP);
+   D = digitalRead(PIN_BTN_DOWN);
+   
+   sprintf(Output,"%04d%04d%d%d%d%d",X_Value,Y_Value,A,B,C,D);
+   Serial.print(Output);
+   Serial.print("\0");
+   N = Output;
+   Sender.print(N);
+   Sender.print ("\0");
+ if(Sender.available()){
+  Serial.write(Sender.read());
+  }
+ if(Serial.available()){
+  Serial.write(Serial.read());}
+
+}
