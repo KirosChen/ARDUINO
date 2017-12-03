@@ -1,0 +1,88 @@
+/* This is code for the car 
+ *  By  Mingyuan Chen
+   Some code from AllAboutCircuits.com
+    
+    Connect HC12 "RXD" pin to Arduino Digital Pin 4
+    Connect HC12 "TXD" pin to Arduino Digital Pin 5
+    Connect HC12 "Set" pin to Arduino Digital Pin 6
+   
+    Do not power over USB.  Per datasheet, 
+    power HC12 with a supply of at least 100 mA with 
+    a 22 uF - 1000 uF reservoir capacitor.
+    Upload code to two Arduinos connected to two computers.
+    
+    Transceivers must be at least several meters apart to work.
+   
+ */
+//install all the libaray we need . 
+#include <SoftwareSerial.h>
+#include <stdio.h>
+#include <servo.h>                  
+//setting the pin and ask space for Value 
+const byte HC12RxdPin = 4;                 
+const byte HC12TxdPin = 5;      
+const byte Set_pin= 6; 
+String Cmd;   
+int X_Value; 
+int Y_Value;  
+Servo LServo;    //Servo L
+Servo RServo;    //Servo R
+                   
+SoftwareSerial HC12(HC12TxdPin,HC12RxdPin); // Create Software Serial Port
+
+void setup() {
+  Serial.begin(9600);                       // Open serial port to computer
+  HC12.begin(9600);                          // Open serial port to HC12 
+  pinMode(Set_pin,OUTPUT);
+  digitalWrite(Set_pin,HIGH);                // Make it High 
+  LServo.attach(9);
+  RServo.attach(10);
+  
+
+  
+  // Open serial port to HC12
+}
+
+void loop() {
+ 
+  if(HC12.available()){                     // If Arduino's HC12 rx buffer has data
+    Cmd = HC12.readStringUntil("\0");
+    X_Value = Cmd.substring(0,4).toInt();
+    Y_Value = Cmd.substring(4,8).toInt();
+    Serial.println(X_Value); 
+    X_Value= map(X_Value,0,1023,0,180);
+    Y_Value= map(Y_Value,0,1023,0,180); 
+    
+    
+    if(Y_Value>90&&X_Value==90){
+      LServo.write(180);
+      RServo.write(0);
+    }
+    if(Y_Value>90&&60<X_Value<90){
+      LServo.write(160);
+      RServo.write(0);
+    }
+    if(Y_Value>90&&120>X_Value>90){
+      LServo.write(180);
+      RServo.write(20);
+    }  
+    if(Y_Value==90&&X_Value==90){
+      LServo.write(90);
+      RServo.write(90);
+    }
+     if(Y_Value==90&&120>X_Value>90){
+      LServo.write(180);
+      RServo.write(90);
+    }
+    if(Y_Value==90&&60<X_Value<90){
+      LServo.write(90);
+      RServo.write(180);
+    }
+    if(60<Y_Value<90&&X_Value==90){
+      LServo.write(0);
+      RServo.write(180);
+    }
+  }
+}
+
+  
