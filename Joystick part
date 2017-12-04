@@ -20,8 +20,8 @@ short int PIN_BTN_JOYSEL = 8; //  JOYSEL pin=8
 short int PIN_ANALOG_X = 0;   //Analog X
 short int PIN_ANALOG_Y = 1;   //Analog Y 
 
-short int PIN_SETTING  = 13;
-short int PIN_Rxd = 11;
+short int PIN_SETTING  = 11;
+short int PIN_Rxd = 13;
 short int PIN_Txd = 12;
 
 
